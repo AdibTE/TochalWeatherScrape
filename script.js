@@ -2,7 +2,9 @@ const express = require('express');
 const app = express();
 const request = require('request');
 const cheerio = require('cheerio');
-const Temp = require('./Temp');
+const cors = require('cors');
+
+app.use(cors())
 
 app.get('/:range', (req, res) => {
     request(`https://www.snow-forecast.com/resorts/Tochal/forecasts/feed/${req.params.range}/m`, (err, response, html) => {
