@@ -10,12 +10,12 @@ app.get('/:range', (req, res) => {
     request(`https://www.snow-forecast.com/resorts/Tochal/forecasts/feed/${req.params.range}/m`, (err, response, html) => {
         if (!err && response.statusCode == 200) {
             const $ = cheerio.load(html);
-            const botData = $('#table-temp').find('td').first();
-            let temp = botData.text().replace(/\D+/gm, '').split('');
             let outlook = $('#table-outlook').find('td').first().find('img').attr('alt');
+            const botData = $('#table-temp').find('td').first();
+            let temp = botData.text().split('|');
             let data = {
-                min: temp[1],
-                max: temp[0],
+                min: parseInt(temp[1]),
+                max: parseInt(temp[0]),
                 outlook
             };
             res.json(data)
